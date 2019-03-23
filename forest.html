@@ -1,0 +1,48 @@
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+	<script src="./animation/animator.js"></script>
+	<script src="./animals/animal.js"></script>
+	<script src="./animals/bunny.js"></script>
+	<script src="./vegetables/carrot.js"></script>
+	<script src="./forest.js"></script>
+
+	<title>forest</title>
+</head>
+    
+<body background="forest.png" bgcolor="black">
+        <canvas id="main_canvas" width="2048" height="2048"></canvas>
+        <script>
+            (function () {
+                init_animator();               
+	              var canvas = document.getElementById("main_canvas");
+ 	              var context = canvas.getContext("2d");
+
+                var forest = make_forest({context: context});
+                var t = 0;
+
+	              function main_loop () {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                      
+                    forest.update_for_timestep(t);
+
+                    var bunny = forest.animals[0];
+                    bunny.Think(forest);
+                    bunny.Act();
+
+                    var carrot = forest.vegetables[0];
+                    carrot.Think(forest);
+                    carrot.Act();
+                    
+                    t++;
+		                window.requestAnimationFrame(main_loop);
+	              };
+
+	              document.addEventListener("loading_complete", main_loop);
+            } ());
+        </script>
+    
+</body>
+</html>
