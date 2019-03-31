@@ -37,11 +37,14 @@ function make_forest(options) {
     forest.animals = [];  
     forest.vegetables = [];  
         
-	  options.add_resources = add_resources;       
+    options.add_resources = add_resources;       
     options.on_resource_load = on_resource_load; 
 
-	  var bunny = Bunny(options);
+    var bunny = Bunny(options);
     forest.animals.push(bunny);
+	
+	var wolf = Wolf(options);
+	forest.animals.push(wolf);
 	   
     var carrot = Carrot(options);
     forest.vegetables.push(carrot);

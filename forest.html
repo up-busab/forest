@@ -6,6 +6,7 @@
 	<script src="./animation/animator.js"></script>
 	<script src="./animals/animal.js"></script>
 	<script src="./animals/bunny.js"></script>
+	<script src="./animals/wolf.js"></script>
 	<script src="./vegetables/carrot.js"></script>
 	<script src="./forest.js"></script>
 
@@ -28,9 +29,12 @@
                       
                     forest.update_for_timestep(t);
 
-                    var bunny = forest.animals[0];
-                    bunny.Think(forest);
-                    bunny.Act();
+					for(var index in forest.animals) {
+						var animal = forest.animals[index];
+						console.log(animal)
+						animal.Think(forest);
+						animal.Act();
+					}
 
                     var carrot = forest.vegetables[0];
                     carrot.Think(forest);
