@@ -1,4 +1,4 @@
-function Bunny(options) {
+function Bunny(options,name) {
 
   function Think(forest) {
     
@@ -52,6 +52,8 @@ function Bunny(options) {
   bunny.context = options.context;
   bunny.sprites = [];
 
+  bunny.name = name;
+  bunny.type="bunny";
   bunny.pos = {};
   bunny.pos.x = 300;
   bunny.pos.y = 300;

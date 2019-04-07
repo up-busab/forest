@@ -27,6 +27,7 @@ function Wolf(options) {
   wolf.context = options.context;
   wolf.sprites = [];
 
+  wolf.type = "wolf";
   wolf.pos = {};
   wolf.pos.x = 100;
   wolf.pos.y = 100;

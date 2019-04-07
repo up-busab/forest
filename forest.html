@@ -31,7 +31,6 @@
 
 					for(var index in forest.animals) {
 						var animal = forest.animals[index];
-						console.log(animal)
 						animal.Think(forest);
 						animal.Act();
 					}
@@ -40,8 +39,10 @@
                     carrot.Think(forest);
                     carrot.Act();
                     
+					forest.animal_interactions();	
+					
                     t++;
-		                window.requestAnimationFrame(main_loop);
+		            window.requestAnimationFrame(main_loop);
 	              };
 
 	              document.addEventListener("loading_complete", main_loop);

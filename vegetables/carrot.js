@@ -1,9 +1,9 @@
 function Carrot(options) {
 
   function Think(forest) {
-      var oldpos = {};
-      oldpos.x = this.pos.x;
-      oldpos.y = this.pos.y;
+	  this.draw_pos = {};
+	  this.draw_pos.x = this.pos.x - this.width/2
+	  this.draw_pos.y = this.pos.y - this.height/2
       this.ChooseSprite();
   };
 
@@ -12,7 +12,7 @@ function Carrot(options) {
   }
 
   function Act() {
-    this.sprites[this.current_sprite].update(this.pos);
+    this.sprites[this.current_sprite].update(this.draw_pos);
     this.sprites[this.current_sprite].render();
   };
     
@@ -23,7 +23,9 @@ function Carrot(options) {
   carrot.pos = {};
   carrot.pos.x = 200;
   carrot.pos.y = 200;
-
+  carrot.width = 110;
+  carrot.height = 110;
+  
   carrot.current_sprite = 0;
 
   var num_sprites = 1;
@@ -31,8 +33,8 @@ function Carrot(options) {
 
   var carrot_static = 
       make_sprite({ context: carrot.context,
-          width: 110,
-          height: 110,
+          width: carrot.width,
+          height: carrot.height,
           file: "vegetables/carrot.png",
           numberOfFrames: 1,
           ticksPerFrame: 1,
