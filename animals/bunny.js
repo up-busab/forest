@@ -6,7 +6,7 @@ function Bunny(options,name) {
     
     stimulus = {};
     stimulus.smells= [
-      {desc:"poo", x:100, y:200}, {desc:"carrot", x:300, y:100}
+      {type:"poo", x:100, y:200}, {type:"carrot", x:300, y:100}
     ];
     stimulus.sights =[
       {desc:"carrot", x:200, y:200}
@@ -15,9 +15,25 @@ function Bunny(options,name) {
     smells = stimulus.smells;
     sights = stimulus.sights;
     
-	this.desired_direction.x = smells[1].x - this.pos.x;
-	this.desired_direction.y = smells[1].y - this.pos.y;
+    for (var s in smells) {
+	  smell = smells[s]
+	  
+	  if(smell.type === "wolf") {
+	  	this.run_from(smell.x, smell.y, 0.9);
+	  }
+	  
+	  
+	  if(smell.type === "carrot") {
+	  	this.run_to(smell.x, smell.y, 1.0);
+	  }    }
   };
+
+  function run_to(x, y, importance) {
+  	dirx = x - this.pos.x;
+  	diry = y - this.pos.y;
+  	this.desired_direction.x += importance * dirx; 
+  	this.desired_direction.y += importance * diry;
+  }; 
 
   function Act() {
     var oldpos = {};
@@ -55,8 +71,8 @@ function Bunny(options,name) {
   bunny.name = name;
   bunny.type="bunny";
   bunny.pos = {};
-  bunny.pos.x = 300;
-  bunny.pos.y = 300;
+  bunny.pos.x = 400;
+  bunny.pos.y = 400;
 
   bunny.facing = {};
   bunny.facing.x = 1;
@@ -95,6 +111,7 @@ function Bunny(options,name) {
     bunny.sprites.push(bunny_left);
 
   bunny.Think = Think;
+  bunny.run_to = run_to;
   bunny.ChooseSprite = ChooseSprite;
   bunny.getDesiredDirection = getDesiredDirection;
   bunny.Act = Act;
