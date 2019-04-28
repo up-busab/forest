@@ -21,14 +21,33 @@ function timestep() {
     return this.time;
 };
 
-function distance(animal1,animal2) {
-	var deltax = animal1.pos.x - animal2.pos.x;
-	var deltay = animal1.pos.y - animal2.pos.y;
+function distance(thing1,thing2) {
+	var deltax = thing1.pos.x - thing2.pos.x;
+	var deltay = thing1.pos.y - thing2.pos.y;
 	return Math.sqrt(deltax*deltax + deltay*deltay)	
+}
+
+function get_scent_distance(type1, type2) {
+    scent_distance = this.scent_distance[type1][type2];
+	return scent_distance !== undefined ? scent_distance : 0;
+}
+
+function stimulate(senses) {
+    animal = senses.animal;
+	stimulus = { smells:[], sights:[] };
+	for(vk in this.vegetables) {
+		vegetable = this.vegetables[vk];
+		scent_distance = this.get_scent_distance(animal.type,vegetable.type);
+		if( distance(animal,vegetable) < scent_distance ) {
+			stimulus.smells.push({type:vegetable.type, x:vegetable.pos.x, y:vegetable.pos.y});
+		}
+	}
+	return stimulus;
 }
 
 function animal_interactions() {
 	dead_bunnies = [];
+	//check which bunnies are too close to wolves
 	for(a1 in this.animals){
 		for(a2 in this.animals){
 			animal1 = this.animals[a1]
@@ -40,6 +59,8 @@ function animal_interactions() {
 			}
 		}			
 	}
+	
+	//kill dem bunnies
 	for(bunny in dead_bunnies){
 		this.animals = this.animals.filter(function(value, index, arr){
 			return bunny.name === value.name;
@@ -59,6 +80,8 @@ function make_forest(options) {
     forest.time = 0;
     forest.update_for_timestep = update_for_timestep;
     forest.timestep = timestep;
+	forest.stimulate = stimulate;
+	forest.get_scent_distance = get_scent_distance;
 	forest.animal_interactions = animal_interactions;	
  
     forest.animals = [];  
@@ -76,6 +99,11 @@ function make_forest(options) {
     var carrot = Carrot(options);
     forest.vegetables.push(carrot);
 	        
+	forest.scent_distance = {};		
+    forest.scent_distance["bunny"] = {};	
+    forest.scent_distance["bunny"]["carrot"] = 1000;
+    forest.scent_distance["wolf"] = {};
+	
     return forest;       
 };
 

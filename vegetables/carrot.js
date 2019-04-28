@@ -20,11 +20,12 @@ function Carrot(options) {
   carrot.context = options.context;
   carrot.sprites = [];
 
+  carrot.type = "carrot";
   carrot.pos = {};
   carrot.pos.x = 200;
   carrot.pos.y = 200;
-  carrot.width = 110;
-  carrot.height = 110;
+  carrot.width = 24;
+  carrot.height = 24;
   
   carrot.current_sprite = 0;
 

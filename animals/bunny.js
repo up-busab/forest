@@ -2,16 +2,8 @@ function Bunny(options,name) {
 
   function Think(forest) {
     
-    //stimulus = forest.stimulate(this.senses); 
+    stimulus = forest.stimulate(this.senses); 
     
-    stimulus = {};
-    stimulus.smells= [
-      {type:"poo", x:100, y:200}, {type:"carrot", x:300, y:100}
-    ];
-    stimulus.sights =[
-      {desc:"carrot", x:200, y:200}
-    ];
-
     smells = stimulus.smells;
     sights = stimulus.sights;
     
@@ -22,17 +14,20 @@ function Bunny(options,name) {
 	  	this.run_from(smell.x, smell.y, 0.9);
 	  }
 	  
-	  
 	  if(smell.type === "carrot") {
 	  	this.run_to(smell.x, smell.y, 1.0);
-	  }    }
+	  }    
+	}
   };
 
   function run_to(x, y, importance) {
   	dirx = x - this.pos.x;
   	diry = y - this.pos.y;
-  	this.desired_direction.x += importance * dirx; 
-  	this.desired_direction.y += importance * diry;
+	console.log(dirx)
+  	ddx = (1 - importance)*this.desired_direction.x + importance*dirx; 
+  	ddy = (1 - importance)*this.desired_direction.y + importance*diry;
+	this.desired_direction.x = ddx;
+	this.desired_direction.y = ddy;
   }; 
 
   function Act() {
@@ -70,6 +65,10 @@ function Bunny(options,name) {
 
   bunny.name = name;
   bunny.type="bunny";
+  
+  bunny.senses = {};
+  bunny.senses.animal = bunny;
+
   bunny.pos = {};
   bunny.pos.x = 400;
   bunny.pos.y = 400;
@@ -108,7 +107,7 @@ function Bunny(options,name) {
             ticksPerFrame: 4,
             on_resource_load: options.on_resource_load  
         });
-    bunny.sprites.push(bunny_left);
+  bunny.sprites.push(bunny_left);
 
   bunny.Think = Think;
   bunny.run_to = run_to;
@@ -116,7 +115,6 @@ function Bunny(options,name) {
   bunny.getDesiredDirection = getDesiredDirection;
   bunny.Act = Act;
 
-    return bunny;  
-         
+  return bunny;         
 };
 
